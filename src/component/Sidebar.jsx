@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export const SidebarComp = () => {
   const [data, setData] = useState([])
   const getAllUser = async () => {
-    const response = await Axios.get(`http://localhost:2000/user/getAllUser`)
+    const response = await Axios.get(`https://dark-rose-hermit-crab-belt.cyclic.app/user/getAllUser`)
     setData(response.data)
   }
 

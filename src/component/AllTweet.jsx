@@ -32,7 +32,7 @@ export const AllTweet = () => {
   const [file, setFile] = useState(null)
   const tweets = async () => {
     try {
-      const response = await Axios.get(`http://localhost:2000/user/getAll`)
+      const response = await Axios.get(`https://dark-rose-hermit-crab-belt.cyclic.app/user/getAll`)
       
       setTweet(response.data.reverse())
       
@@ -55,7 +55,7 @@ export const AllTweet = () => {
       }
       data.append('content', writer.content)
       data.append('file', file)
-      const response = await Axios.post(`http://localhost:2000/user/write`, data,{
+      const response = await Axios.post(`https://dark-rose-hermit-crab-belt.cyclic.app/user/write`, data,{
         headers : {Authorization : `bearer ${token}`}
       })
       setReload(!reload)
@@ -67,7 +67,7 @@ export const AllTweet = () => {
   const like = async (id) => {
     try {
       const token = localStorage.getItem('token')
-      const response = await Axios.post(`http://localhost:2000/user/like`,{tweetId : id},{
+      const response = await Axios.post(`https://dark-rose-hermit-crab-belt.cyclic.app/user/like`,{tweetId : id},{
         headers : {Authorization : `bearer ${token}`}
       })
       setReload(!reload)
@@ -196,7 +196,7 @@ export const AllTweet = () => {
                     {item.content}
                   </Text>
                   <Box>
-                    <img src={`http://localhost:2000/${item.Image}`} alt="" />
+                    <img src={`https://dark-rose-hermit-crab-belt.cyclic.app/${item.Image}`} alt="" />
                   </Box>
                 </Box>
               </Flex>

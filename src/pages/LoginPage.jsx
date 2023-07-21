@@ -42,7 +42,7 @@ export const LoginPage = () => {
       password: password.current.value,
         data: usernameEmailPhone.current.value,
       };
-      const response = await Axios.post(`http://localhost:2000/user/login`, user)
+      const response = await Axios.post(`https://dark-rose-hermit-crab-belt.cyclic.app/user/login`, user)
       console.log(response);
       localStorage.setItem("token", response.data.token)
       dispatch(login(response.data.result))

@@ -23,7 +23,7 @@ export const Register = () => {
 
   const onRegister = async (data) => {
     try {
-      const response = await Axios.post(`http://localhost:2000/user/register`,data)       
+      const response = await Axios.post(`https://dark-rose-hermit-crab-belt.cyclic.app/user/register`,data)       
       console.log(response);
     } catch (err) {
       console.log(err);

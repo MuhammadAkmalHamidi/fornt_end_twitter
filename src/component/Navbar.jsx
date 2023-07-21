@@ -10,7 +10,7 @@ export const NavbarComp = () => {
 
     const dispatch = useDispatch()
 
-    const fotoProfil = 'http://localhost:2000/' + profilePic
+    const fotoProfil = 'https://dark-rose-hermit-crab-belt.cyclic.app/' + profilePic
 
 
     const onLogout = () => {
