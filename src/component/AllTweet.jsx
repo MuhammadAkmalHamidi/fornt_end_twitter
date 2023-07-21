@@ -166,7 +166,7 @@ export const AllTweet = () => {
                 borderLeft="1px"
                 borderColor="gray.100"
               >
-                <Avatar />
+                <Avatar name={data.name} />
                 <Box ml="3">
                   <Text
                     fontSize={{ base: "12px", md: "14px", lg: "16px" }}
