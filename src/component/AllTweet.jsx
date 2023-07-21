@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Avatar,
   Box,
@@ -7,7 +7,11 @@ import {
   Textarea,
   Button,
   Image,
+  transition,
+  Icon,
+  Input
 } from "@chakra-ui/react";
+import { GrImage } from "react-icons/gr"
 
 import { Link } from "react-router-dom";
 import {
@@ -15,20 +19,65 @@ import {
   IoRepeat,
   IoShareOutline,
   IoHeartOutline,
+  IoHeartSharp
 } from "react-icons/io5";
+import { useSelector } from "react-redux";
+import  Axios  from "axios";
 
 export const AllTweet = () => {
   const Data = [1, 2, 3]
+  const [reload, setReload] = useState(true)
+  const button = useRef()
+  const [tweet, setTweet] = useState([])
+  const [file, setFile] = useState(null)
+  const tweets = async () => {
+    try {
+      const response = await Axios.get(`http://localhost:2000/user/getAll`)
+      
+      setTweet(response.data.reverse())
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    tweets()
+  },[reload])
 
   const onTweet = async () => {
+    
+    const token = localStorage.getItem("token")
     try {
-      const writer = document.getElementById("tulisan").value;
-      console.log(writer);
+      const data = new FormData()
+      const writer = {
+        content : document.getElementById('tulisan').value,  
+      }
+      data.append('content', writer.content)
+      data.append('file', file)
+      const response = await Axios.post(`http://localhost:2000/user/write`, data,{
+        headers : {Authorization : `bearer ${token}`}
+      })
+      setReload(!reload)
     } catch (err) {
       console.log(err);
     }
-  };
+  }
 
+  const like = async (id) => {
+    try {
+      const token = localStorage.getItem('token')
+      const response = await Axios.post(`http://localhost:2000/user/like`,{tweetId : id},{
+        headers : {Authorization : `bearer ${token}`}
+      })
+      setReload(!reload)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const data = useSelector((state) => state.userSlice.value)
+  console.log(data);
   return (
     <>
       <Flex
@@ -71,7 +120,6 @@ export const AllTweet = () => {
         <Avatar mr="5" />
         <Textarea mb={4} placeholder="Apa yang sedang terjadi?" id="tulisan" />
       </Flex>
-
       <Flex
         w={[400, 500, 600]}
         pl="6"
@@ -84,13 +132,20 @@ export const AllTweet = () => {
         borderRight="1px"
         borderLeft="1px"
         borderColor="gray.300"
-        justifyContent="right"
+        justifyContent="space-between"
       >
-        <Button colorScheme="twitter" borderRadius="full" onClick={onTweet}>
+      <Flex cursor={"pointer"}>
+        <Input hidden ref={button} cursor={"pointer"} onChange={(e) => {
+          setFile(e.target.files[0])
+        }}variant={"unstyled"} type="file" id="image" bgColor={"white"}  >
+        </Input>
+          <Icon cursor={"pointer"} onClick={() => button.current.click()}  as={GrImage}  fontSize={"25px"} />
+      </Flex>
+        <Button colorScheme="twitter" borderRadius="full" onClick={onTweet} >
           Tweet
         </Button>
       </Flex>
-      {Data.map((item) => {
+      {tweet?.map((item) => {
         return (
           <>
             <Box
@@ -117,8 +172,8 @@ export const AllTweet = () => {
                     fontSize={{ base: "12px", md: "14px", lg: "16px" }}
                     fontFamily="serif"
                   >
-                    <Link fontWeight="bold">ahmad</Link>{" "}
-                    ahmad@gmail.com - 10 juli 2023
+                    <Link fontWeight="bold"> {item.user.name} </Link>{" "}
+                    {item.user.email} - {item.createdAt}
                   </Text>
                 </Box>
               </Flex>
@@ -138,12 +193,16 @@ export const AllTweet = () => {
                     fontSize={{ base: "12px", md: "14px", lg: "16px" }}
                     fontFamily="serif"
                   >
-                    Semangat bikin minpro 2
+                    {item.content}
                   </Text>
+                  <Box>
+                    <img src={`http://localhost:2000/${item.Image}`} alt="" />
+                  </Box>
                 </Box>
               </Flex>
 
               <Flex
+               alignItems={"center"}
                 pl="6"
                 pb="6"
                 pr="6"
@@ -159,8 +218,9 @@ export const AllTweet = () => {
                   <IoChatbubbleOutline />
                 </Flex>
                 <IoShareOutline />
-                <Flex>
-                  <IoHeartOutline />
+                <Flex justifyContent={"center"}  alignItems={"center"}>
+                  {item.likeTweets.findIndex(item => item.userId == data.id) !== -1 ? <IoHeartSharp onClick={()=> like(item.id)} color="red" cursor={"pointer"} />  : <IoHeartOutline onClick={()=> like(item.id)} color="black" cursor={"pointer"} /> }    
+                  <Text> {item.likeTweets.length} </Text>
                 </Flex>
                 <IoRepeat />
               </Flex>

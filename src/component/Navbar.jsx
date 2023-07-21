@@ -6,7 +6,8 @@ import { Flex, Avatar, Box, Text, Tag,
 import { TweetPage } from "./TweetPage";
 
 export const NavbarComp = () => {
-    const { username, email, profilePic } = useSelector((state) => state.userSlice.value)
+    const { name, email, profilePic } = useSelector((state) => state.userSlice.value)
+
     const dispatch = useDispatch()
 
     const fotoProfil = 'http://localhost:2000/' + profilePic
@@ -144,18 +145,18 @@ export const NavbarComp = () => {
                         <MenuButton>
                             <Flex>
                                 <Tag size='lg'  borderRadius='full' p="6px" pr={5}  _hover={{ colorScheme: "blue" }} _focus={{ boxShadow: "outline" }}>
-                                    <Avatar name={username} src={fotoProfil} />
+                                    <Avatar name={name} src={fotoProfil} />
                                     <Box ml='3'>
                                         <Text fontWeight='bold'>
-                                            ahmad
+                                            {name}
                                         </Text>
-                                        <Text fontSize='sm'>ahmad@gmail.com</Text>
+                                        <Text fontSize='sm'>{email}</Text>
                                     </Box>
                                 </Tag>
                             </Flex>
                         </MenuButton>
                         <MenuList>
-                            <MenuItem as={Link} to="/login" onClick={onLogout}>Keluar dari Ahmad</MenuItem>
+                            <MenuItem as={Link} to="/login" onClick={onLogout}> keluar dari {name} </MenuItem>
                             <MenuItem as={Link} to="/profil">Profil</MenuItem>
                         </MenuList>
                         </Menu>

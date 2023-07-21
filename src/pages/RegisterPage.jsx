@@ -16,16 +16,18 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { Field, ErrorMessage, Formik, Form } from "formik";
+import Axios from 'axios';
 
 export const Register = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const onRegister = async (data) => {
     try {
-        console.log(data)
+      const response = await Axios.post(`http://localhost:2000/user/register`,data)       
+      console.log(response);
     } catch (err) {
-      console.log(err.response.data);
-      alert(err.response.data);
+      console.log(err);
+      alert(err);
     }
   };
 

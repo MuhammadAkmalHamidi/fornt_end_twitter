@@ -15,13 +15,13 @@ const initialState = {
     reducers: {
         login: (state, action) => {
             state.value.id = action.payload.id;
-            state.value.username = action.payload.username;
+            state.value.name = action.payload.name;
             state.value.email = action.payload.email;
             state.value.profilePic = action.payload.profilePic;
         },
         logout: (state) => {
             state.value.id = 0;
-            state.value.username = "";
+            state.value.name = "";
             state.value.email = "";
             state.value.profilePic = "";
         },

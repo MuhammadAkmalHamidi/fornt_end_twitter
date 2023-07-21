@@ -11,6 +11,7 @@ import {
   ModalCloseButton,
   ModalBody,
   Box,
+  Text,
 } from "@chakra-ui/react";
 
 import React from "react";
@@ -20,11 +21,11 @@ export const TweetPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
+  
 
   const onTweet = async () => {
     try {
       const writer = document.getElementById("write").value;
-      console.log(writer);
     } catch (err) {
       console.log(err);
     }

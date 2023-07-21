@@ -1,8 +1,17 @@
 import { Flex, Avatar, Box, Text, Button } from "@chakra-ui/react";
-import { useState } from "react";
+import  Axios  from "axios";
+import { useEffect, useState } from "react";
 
 export const SidebarComp = () => {
-  const Data = [1, 2, 3, 4, 5]
+  const [data, setData] = useState([])
+  const getAllUser = async () => {
+    const response = await Axios.get(`http://localhost:2000/user/getAllUser`)
+    setData(response.data)
+  }
+
+  useEffect(() => {
+    getAllUser()
+  },[])
 
   return (
     <>
@@ -21,7 +30,7 @@ export const SidebarComp = () => {
             Untuk Diikuti
           </Text>
         </Box>
-        {Data.map((item) => {
+        {data.map((item) => {
           return (
             <>
               <Flex
@@ -35,10 +44,10 @@ export const SidebarComp = () => {
               >
                 <Avatar />
                 <Text pl="4" pr="6" fontWeight="bold">
-                  ahmad
+                  {item.name}
                 </Text>
                 <Button size="xs" colorScheme="twitter" borderRadius="full">
-                  Ikuti
+                  Follow
                 </Button>
               </Flex>
             </>

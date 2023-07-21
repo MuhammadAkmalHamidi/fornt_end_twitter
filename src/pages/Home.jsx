@@ -5,6 +5,7 @@ import { NavbarComp } from "../component/Navbar";
 import { SidebarComp } from "../component/Sidebar";
 
 export const HomePage = () => {
+  
   return (
     <>
       <Grid bg="white" templateColumns="repeat(3, 1fr)">

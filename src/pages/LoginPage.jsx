@@ -22,21 +22,31 @@ import {
   Tag,
   Center,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Register } from "./RegisterPage";
+import  Axios  from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../redux/userSlice";
 
 export const LoginPage = () => {
   const usernameEmailPhone = useRef("");
   const password = useRef("");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   const onLogin = async () => {
     try {
       const user = {
-        password: password.current.value,
+      password: password.current.value,
         data: usernameEmailPhone.current.value,
       };
-      console.log(user)
+      const response = await Axios.post(`http://localhost:2000/user/login`, user)
+      console.log(response);
+      localStorage.setItem("token", response.data.token)
+      dispatch(login(response.data.result))
+      navigate('/')
     } catch (err) {
       console.log(err);
     }
