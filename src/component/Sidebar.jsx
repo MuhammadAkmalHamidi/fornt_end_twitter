@@ -42,7 +42,7 @@ export const SidebarComp = () => {
                 borderBottom="1px"
                 borderColor="gray.200"
               >
-                <Avatar />
+                <Avatar name={item.name} />
                 <Text pl="4" pr="6" fontWeight="bold">
                   {item.name}
                 </Text>

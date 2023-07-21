@@ -117,7 +117,7 @@ export const AllTweet = () => {
         borderLeft="1px"
         borderColor="gray.300"
       >
-        <Avatar mr="5" />
+        <Avatar name={data.name} mr="5" />
         <Textarea mb={4} placeholder="Apa yang sedang terjadi?" id="tulisan" />
       </Flex>
       <Flex
@@ -166,7 +166,7 @@ export const AllTweet = () => {
                 borderLeft="1px"
                 borderColor="gray.100"
               >
-                <Avatar name={data.name} />
+                <Avatar name={item.user.name} />
                 <Box ml="3">
                   <Text
                     fontSize={{ base: "12px", md: "14px", lg: "16px" }}
